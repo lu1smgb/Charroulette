@@ -1,0 +1,6 @@
+# GIMP projects
+xcf
+*.xcf
+
+# Debug console and messages
+debug

@@ -1,0 +1,19 @@
+{
+	"id": "Charroulette",
+	"name": "Charroulette",
+	"display_name": "Charroulette",
+	"author": ["ElNion"],
+	"description": "Mod de Balatro (no va a llegar muy lejos)",
+	"prefix": "chr",
+	"main_file": "Charroulette.lua",
+	"priority": 0,
+	"badge_colour": "EB3434",
+	"badge_text_colour": "161616",
+	"version": "0.0.1-dev",
+	"dependencies": [
+		{
+			"id": "Steamodded",
+			"min_version": "1.0.0~ALPHA-1030e"
+		}
+	]
+}
