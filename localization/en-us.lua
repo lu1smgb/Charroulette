@@ -5,7 +5,7 @@ return {
             b_chr_debug = {
                 name = 'Debug deck',
                 text = {
-                    "Start with {C:money}$#1#M{} and", 
+                    "Start with {C:money}$#1#{} and", 
                     "an {C:dark_edition,T:j_chr_helloworld}Hello World! {C:dark_edition,T:e_negative}negative joker"
                 }
             }
@@ -37,6 +37,20 @@ return {
                     "{C:inactive,s:0.7}Anabolic"
                 }
             },
+            j_chr_roulette = {
+                name = "Roulette",
+                text = {
+                    "Spin a Casino Roulette every {C:blue}hand{} and {C:red}discard{}",
+                    "{C:red}Pay {C:money}$#2#{} {C:red}for each {C:blue}hand{} used at end of round",
+                    " ",
+                    "Each scoring card of the {C:attention}result{} color grants",
+                    "{C:mult}base mult{} according to the number of the {C:attention}result",
+                    "If the result is {X:green,C:white}0{}, all scoring cards",
+                    "grant {C:mult}+#3#{} mult and {C:money}$#4#{}",
+                    "{C:inactive}(Result: {V:1}#1#{}{C:inactive})",
+                    "{C:inactive,s:0.7}ALL IN!!!",
+                }
+            }
         }
     }
 }

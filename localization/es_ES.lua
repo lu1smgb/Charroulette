@@ -4,7 +4,7 @@ return {
             b_chr_debug = {
                 name = 'Baraja debug',
                 text = {
-                    "Comienza con {C:money}$#1#M{} y", 
+                    "Comienza con {C:money}$#1#{} y", 
                     "un comodín {C:dark_edition,T:j_chr_helloworld}HelloWorld {C:dark_edition,T:e_negative}negativo" 
                 }
             }
@@ -37,6 +37,20 @@ return {
                     "{C:inactive,s:0.7}Anabólico"
                 }
             },
+            j_chr_roulette = {
+                name = "Ruleta",
+                text = {
+                    "Gira una ruleta de casino en cada {C:blue}mano{} y {C:red}descarte{}",
+                    "{C:red}Pagas {C:money}$#2#{} {C:red}por cada {C:blue}mano{} usada al final de la ronda",
+                    " ",
+                    "Cada carta del color del {C:attention}resultado{} otorga",
+                    "{C:mult}multi base{} según el número del {C:attention}resultado{}",
+                    "Si el resultado es {X:green,C:white}0{}, todas las cartas",
+                    "que anotan otorgan {C:mult}+#3#{} multi y {C:money}$#4#",
+                    "{C:inactive}(Resultado: {V:1}#1#{}{C:inactive})",
+                    "{C:inactive,s:0.7}TODO AL {}{X:green,C:white,s:0.7}VERDE{}{C:inactive,s:0.7}!!!",
+                }
+            }
         }
     }
 }

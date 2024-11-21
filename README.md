@@ -19,7 +19,7 @@ Los items marcados son cosas que ya se encuentran implementadas
 - [x] Hola mundo!
 - [x] España
 - [x] Bocata de huevo
-- [ ] Ruleta (Roulette)
+- [x] Ruleta (Roulette)
 - [ ] Tragaperras
 - [ ] Pizza cuadrada
 - [ ] El doblón
