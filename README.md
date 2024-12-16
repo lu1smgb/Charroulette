@@ -6,7 +6,7 @@
 
 ## Sobre el mod
 
-Este es un mod de Balatro muy pequeño dedicado a mis amigos en el que estoy trabajando por diversión
+Este es un mod de Balatro muy pequeño en el que estoy trabajando por diversión
 
 ## Plan de contenido
 
@@ -16,21 +16,63 @@ Los items marcados son cosas que ya se encuentran implementadas
 
 ### Comodines
 
-- [x] Hola mundo!
-- [x] España
-- [x] Bocata de huevo
-- [x] Ruleta (Roulette)
-- [ ] Tragaperras
-- [ ] Pizza cuadrada
-- [ ] El doblón
-- [ ] El basto
-- [ ] La espada
-- [ ] El cáliz
-- [ ] ...
+- [x] Hola mundo! -> Comodin de prueba
+- [x] España -> x3 de multi si la mano jugada contiene al menos una carta de corazones y de diamantes que anotan
+- [x] Bocata de huevo -> Gana x0.1 de multi por cada $ obtenido al vender huevos (TODO: Los huevos pueden aparecer varias veces `get_current_pool`)
+- [x] Ruleta -> *Mucho texto* Basicamente es una ruleta de casino y segun el resultado tiene efectos distintos
+- [?] Tragaperras -> +7 de multi por cada 7 que anota (TODO: y 1$)
+- [ ] Pizza cuadrada -> Reactiva los efectos de los comodines de comida (Complicado de implementar)
+```
+"j_egg",
+"j_ice_cream",
+"j_popcorn",
+"j_ramen",
+"j_gros_michel",
+"j_cavendish",
+"j_diet_cola",
+"j_turtle_bean",
+"j_selzer"
+```
+- [ ] El doblón -> Genera una carta La templanza negativa si la primera mano de la ronda contiene un As de Diamantes que anota
+- [ ] El basto -> Genera una carta La emperatriz negativa si la primera mano de la ronda contiene un As de Treboles que anota
+- [ ] La espada -> Genera una carta El hierofante negativa si la primera mano de la ronda contiene un As de Picas que anota
+- [ ] El cáliz -> Genera una carta El carruaje negativa si la primera mano de la ronda contiene un As de Corazones que anota
+- [ ] Comerciante -> Gana x0.05 de multi por cada carta, paquete potenciador o vale comprado.
+- [ ] Mango -> *No se pero con lo buenos que estan tendra que hacer algo muy bueno*
+- [ ] League of Legends -> Carta troll
+  - [ ] Destruye todos tus comodines y consumibles, incluso los eternos. Huecos de comodin a 1 y huecos de consumibles a cero. Se convierte en eterno.
+  - [ ] Dinero a cero
+  - [ ] Inhabilita todas las cartas
+  - [ ] Tamaño de mano, manos a 1 y descartes a 0
+  - [ ] Ninguna mano jugada vale para la puntuacion
+- [ ] Comodin aerodinamico -> ???
+- [ ] Choque de espadas -> Reactiva las cartas adicionales jugadas (INUSUAL)
+- [ ] Terremoto -> Reactiva las cartas multi jugadas (INUSUAL)
+- [ ] Ingeniero -> x1 multi, pierde x0.1 multi cada ronda. 1 en 5 posibilidades de crear un Plano al vender este comodin, aumenta en 1 cada ronda (INUSUAL)
+- [ ] Comodin maldito -> x3 de multi. x2 tamaño de la ciega. (Siempre es eterno) (INUSUAL)
+- [ ] Comodin del UNO -> Todas las cartas se consideran del mismo palo (RARA)
 
-### Barajas
+### Consumibles
 
-Hay una baraja que se llama Debug, pero seguramente será eliminada en un futuro ya que la utilizo principalmente para probar las cosas que voy implementando
+#### Tarot
+
+Nada de momento
+
+#### Planeta
+
+- [ ] Vegetta (Vegetta777) -> ???
+
+#### Espectrales
+
+- [ ] Misionario -> Te da una carta Captura
+- [ ] Captura -> 1 en ??? de ganar la ciega y convertirla en un comodin de ciega. La probabilidad sube cuanto mas te acerques a las fichas requeridas. No se puede conseguir en paquetes potenciadores espectrales.
+
+#### Custom
+
+##### UNO
+
+- [ ] +4 -> +4 de tamaño de mano en la siguiente ronda
+- [ ] +2 -> +2 de tamaño de mano en la siguiente ronda
 
 ## Instalación
 
@@ -50,13 +92,13 @@ Este mod tiene traducciones al inglés y al español
 
 ---
 
-# English
+# English (OUTDATED)
 
 *If the translation has some errors, please make me know in issues if you found one, thanks :)*
 
 ## Sobre el mod
 
-This is a very small Balatro mod dedicated to my friends in which im working for fun
+This is a very small Balatro mod in which im working for fun
 
 ## Plan de contenido (Content Roadmap)
 
@@ -76,11 +118,11 @@ Checked items are things that are already implemented and can be found on the mo
 - [ ] The Club
 - [ ] The Sword
 - [ ] The Chalice
-- [ ] ...
-
-### Decks
-
-There is a deck called Debug, but surely will be deleted in the future because it is mainly used for testing purposes
+- [ ] Krunker
+- [ ] Splendor
+- [ ] League of Legends -> Troll card
+- [ ] Aero Joker
+- [ ] Earthquake -> Retrigger played mult cards
 
 ## Installation
 

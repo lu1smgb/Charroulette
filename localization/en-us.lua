@@ -1,15 +1,6 @@
 -- English traductions
 return {
     descriptions = {
-        Back = {
-            b_chr_debug = {
-                name = 'Debug deck',
-                text = {
-                    "Start with {C:money}$#1#{} and", 
-                    "an {C:dark_edition,T:j_chr_helloworld}Hello World! {C:dark_edition,T:e_negative}negative joker"
-                }
-            }
-        },
         Joker = {
             j_chr_helloworld = {
                 name = "Hello World!",
@@ -38,17 +29,17 @@ return {
                 }
             },
             j_chr_roulette = {
-                name = "Roulette",
+                name = "The roulette",
                 text = {
-                    "Spin a Casino Roulette every {C:blue}hand{} and {C:red}discard{}",
-                    "{C:red}Pay {C:money}$#2#{} {C:red}for each {C:blue}hand{} used at end of round",
+                    "Spin a casino roulette every {C:blue}hand{} and {C:red}discard{}",
+                    "{C:red}Lose {C:money}$#2#{} {C:red}for each played {C:blue}hand",
                     " ",
                     "Each scoring card of the {C:attention}result{} color grants",
                     "{C:mult}base mult{} according to the number of the {C:attention}result",
-                    "If the result is {X:green,C:white}0{}, all scoring cards",
+                    "If the {C:attention}result{} is {X:green,C:white}0{}, all scoring cards",
                     "grant {C:mult}+#3#{} mult and {C:money}$#4#{}",
                     "{C:inactive}(Result: {V:1}#1#{}{C:inactive})",
-                    "{C:inactive,s:0.7}ALL IN!!!",
+                    "{C:inactive,s:0.7}ALL ON {X:green,C:white,s:0.7}GREEN{}{C:inactive,s:0.7}!!!",
                 }
             }
         }

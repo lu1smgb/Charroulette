@@ -1,3 +1,45 @@
+function spanish_ace_effect(selfcard, card, context)
+    local trigger = false
+    if context.cardarea == G.jokers and not selfcard.debuff and context.after
+    and G.GAME.current_round.hands_played == 0 then
+        -- Searches for the required card
+        for i=1, #context.scoring_hand do
+            local pc = context.scoring_hand[i]
+            if pc:is_suit(selfcard.config.req_card.suit) and pc:get_id() == selfcard.config.req_card.id then
+                trigger = true
+                break
+            end
+        end
+        if trigger then
+            G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0,
+                func = function ()
+                    local created_card = create_card(
+                        'Tarot',
+                        G.consumeables,
+                        nil,
+                        nil,
+                        nil,
+                        nil,
+                        selfcard.config.created_card,
+                        selfcard.key
+                    )
+                    created_card:set_edition({negative = true}, true)
+                    created_card:add_to_deck()
+                    G.consumeables:emplace(created_card)
+                    return true
+                end
+            }))
+            return {
+                message = localize('k_chr_created_card', 'misc'),
+                colour = G.C.SUITS[selfcard.config.req_card.suit],
+                card = selfcard
+            }
+        end
+    end
+end
+
 -- ###########################################
 -- ############# ATLAS (SPRITES) #############
 -- Textures for the jokers
@@ -10,7 +52,6 @@ SMODS.Atlas {
     },
     atlas_table = 'ASSET_ATLAS'
 }
-
 -- ######################################
 -- ############### JOKERS ###############
 -- Hello World (Test Joker, might be deleted)
@@ -30,6 +71,7 @@ SMODS.Joker {
         mult = 10
     },
     blueprint_compat = true,
+    eternal_compat = true,
     calculate = function (self, card, context)
         if context.cardarea == G.jokers and not context.after and not context.before then
             local mult = card.ability.mult
@@ -41,8 +83,7 @@ SMODS.Joker {
         end
     end
 }
-
--- Spain Ñ
+-- Spain
 SMODS.Joker {
     key = 'spain',
     atlas = 'jokers',
@@ -59,11 +100,12 @@ SMODS.Joker {
     unlocked = true,
     discovered = true,
     blueprint_compat = true,
+    eternal_compat = true,
     calculate = function (self, card, context)
 
         if context.cardarea == G.jokers and not context.before and not context.after and context.scoring_hand then
 
-            -- Highly "inspired" of Flower Pot code
+            -- Highly "inspired" Flower Pot code
 
             local conditions = {
                 ['Hearts'] = 0,
@@ -99,8 +141,8 @@ SMODS.Joker {
         end
     end
 }
-
 -- Egg Sandwich
+-- TODO IDEA: Eggs are likely to appear more (showman effect)
 SMODS.Joker {
     key = 'eggsandwich',
     atlas = 'jokers',
@@ -126,13 +168,11 @@ SMODS.Joker {
     unlocked = true,
     discovered = true,
     blueprint_compat = true,
+    eternal_compat = true,
     calculate = function (self, card, context)
         -- This just applies the current xmult, check lovely.toml for the sell egg effect
         local _xmult = card.ability.x_mult
-        if context.cardarea == G.jokers 
-            and not context.before 
-            and not context.after 
-            and _xmult > 1 then
+        if context.cardarea == G.jokers and not context.before and not context.after and _xmult > 1 then
             return {
                 message = localize{ type='variable', key='a_xmult', vars = {_xmult}},
                 Xmult_mod = _xmult
@@ -140,8 +180,8 @@ SMODS.Joker {
         end
     end
 }
-
 -- Roulette
+-- TODO: Check if works well when duplicated (invis joker)
 SMODS.Joker {
     key = 'roulette',
     atlas = 'jokers',
@@ -149,137 +189,333 @@ SMODS.Joker {
     rarity = 3,
     loc_txt = localize{ type='descriptions', set='Joker', key='j_chr_roulette' },
     loc_vars = function (self, info_queue, center)
+        local number = center.ability.extra.result.number or '?'
+        local penalty = center.ability.extra.globals.dollar_penalty_per_round or '?'
+        local big_prize = center.ability.extra.globals.big_prize
+        local color = center.ability.extra.result.color or G.C.UI.TEXT_DARK
+        local odds = tostring(G.GAME and G.GAME.probabilities.normal or 1)
         return {
             vars = {
-                self.config.extra.result.number or '?',
-                self.config.extra.dollar_penalty_per_round,
-                self.config.extra.big_prize.mult,
-                self.config.extra.big_prize.dollars,
-                colours = {
-                    self.config.extra.result.color.code
-                }
+                number,
+                penalty,
+                odds,
+                big_prize.prob or '?',
+                big_prize.mult or '?',
+                big_prize.dollars or '?',
+                colours = { color }
             },
         }
     end,
     cost = 5,
     config = {
         extra = {
-            rigged = false,
-            min_result = 0,
-            max_result = 36,
+            rigged = false, -- Always 0
             result = {
                 number = nil,
-                color = {
-                    text = nil,
-                    code = G.C.UI.TEXT_DARK
+                color = nil
+            },
+            -- TODO: Optimize this, move this declaration to other file
+            globals = {
+                number_limits = {
+                    min = 0,
+                    max = 36
+                },
+                colors = {
+                    red = HEX('EB3434'),
+                    black = HEX('101010'),
+                    green = G.C.GREEN
+                },
+                dollar_penalty_per_round = 1,
+                big_prize = {
+                    aaaaaa = 777,
+                    prob = 100,
+                    mult = 100,
+                    dollars = 10
                 }
             },
-            color_codes = {
-                red = HEX('EB3434'),
-                black = HEX('101010'),
-                green = G.C.GREEN
-            },
-            color_relations = {
-                red = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36},
-                black = {2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35},
-                green = {0}
-            },
-            dollar_penalty_per_round = 1,
-            big_prize = {
-                mult = 100,
-                dollars = 10
+        }
+    },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    calculate = function (self, card, context)
+
+        -- Spin the roulette
+        if context.before or (context.discard and context.other_card == context.full_hand[#context.full_hand]) and not context.blueprint then
+            
+            -- Seed for random generation
+            local seed = G.GAME.pseudorandom.seed..self.key
+
+            local number_limits = self.config.extra.globals.number_limits
+            local colors = self.config.extra.globals.colors
+
+            -- Decide if big prize is triggered
+            if card.ability.extra.rigged or pseudorandom(seed) < G.GAME.probabilities.normal / self.config.extra.globals.big_prize.prob then
+                card.ability.extra.result.number = 0
+                card.ability.extra.result.color = self.config.extra.globals.colors.green
+            else
+                card.ability.extra.result.number = pseudorandom(seed, number_limits.min, number_limits.max)
+                card.ability.extra.result.color = (pseudorandom(seed, 1, 2) == 1) and colors.red or colors.black
+            end
+            -- Outputs the result
+            return {
+                message = tostring(card.ability.extra.result.number),
+                colour = card.ability.extra.result.color
             }
+
+        end
+
+        -- Apply the effects, blueprint compat
+        if context.individual and context.cardarea == G.play then
+
+            local is_red_card = context.other_card:is_suit('Hearts') or context.other_card:is_suit('Diamonds')
+            local is_black_card = context.other_card:is_suit('Spades') or context.other_card:is_suit('Clubs')
+            local colors = self.config.extra.globals.colors
+            local result_color = card.ability.extra.result.color
+
+            -- Normal scoring
+            if (result_color == colors.red and is_red_card) or (result_color == colors.black and is_black_card) then
+                return {
+                    mult = card.ability.extra.result.number,
+                    card = context.other_card
+                }
+            -- Big prize scoring
+            elseif result_color == colors.green and card.ability.extra.result.number == 0 then
+                return {
+                    mult = card.ability.extra.globals.big_prize.mult,
+                    dollars = card.ability.extra.globals.big_prize.dollars,
+                    card = context.other_card
+                }
+            end
+
+        end
+
+        -- Dollar per hand penalty
+        if context.after and not context.blueprint then
+            local penalty = card.ability.extra.globals.dollar_penalty_per_round
+            ease_dollars(-penalty)
+            card_eval_status_text(card, 'dollars', -penalty)
+        end
+
+    end
+}
+-- Slot Machine
+SMODS.Joker{
+    key = 'slotmachine',
+    atlas = 'jokers',
+    pos = {x=4, y=0}, -- TODO Placeholder
+    rarity = 1,
+    loc_txt = localize{ type='descriptions', set='Joker', key='j_chr_slotmachine' },
+    loc_vars = function (self, info_queue, center)
+        return {
+            vars = {
+                self.config.extra.mult,
+                self.config.extra.category
+            }
+        }
+    end,
+    cost = 5,
+    config = {
+        extra = {
+            category = 7,
+            mult = 7
         }
     },
     unlocked = true,
     discovered = true,
     blueprint_compat = true,
     calculate = function (self, card, context)
-
-        -- Spin the roulette
-        if context.before or (context.discard and context.other_card == context.full_hand[#context.full_hand]) and not context.blueprint then
-            sendDebugMessage(self.config.name, self.key)
-            -- Generate the random number based on the run seed
-            local _seed = G.GAME.pseudorandom.seed
-            local _min, _max = self.config.extra.min_result, self.config.extra.max_result
-            self.config.extra.result.number = self.config.extra.rigged and 0 or pseudorandom(_seed, _min, _max)
-            -- Determine the result color
-            self.config.extra.result.color.text = nil
-            self.config.extra.result.color.code = G.C.UI.TEXT_DARK
-            for c, t in pairs(self.config.extra.color_relations) do
-                for _, v in ipairs(t) do
-                    if self.config.extra.result.number == v then
-                        self.config.extra.result.color.text = c
-                        self.config.extra.result.color.code = self.config.extra.color_codes[c]
-                        break
-                    end
-                end
-                if self.config.extra.result.color.text then break end
-            end
-
-            sendDebugMessage("Result: " .. self.config.extra.result.number .. '(' .. self.config.extra.result.color.text .. ')', self.key)
-
+        if context.individual and context.cardarea == G.play and context.other_card:get_id() == 7 then
             return {
-                message = ''..self.config.extra.result.number,
-                colour = self.config.extra.result.color.code
+                mult = card.ability.extra.mult,
+                card = card
             }
-
         end
-
-        -- Apply the effects
-        if context.individual and context.cardarea == G.play then
-            if self.config.extra.result.color.text == 'red' and (context.other_card:is_suit('Hearts') or context.other_card:is_suit('Diamonds')) 
-            or self.config.extra.result.color.text == 'black' and (context.other_card:is_suit('Spades') or context.other_card:is_suit('Clubs')) then
-                return {
-                    mult = self.config.extra.result.number,
-                    card = context.other_card
-                }
-            elseif self.config.extra.result.color.text == 'green' and self.config.extra.result.number == 0 then
-                return {
-                    mult = self.config.extra.big_prize.mult,
-                    dollars = self.config.extra.big_prize.dollars,
-                    card = context.other_card
-                }
-            end
-        end
-
-        -- End of round penalty
-        if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-            sendDebugMessage("Calculating Roulette Penalty...", self.key)
-            local _hands_played = G.GAME.current_round.hands_played or 0
-            sendDebugMessage("Hands played: ".._hands_played, self.key)
-            local _penalty = _hands_played * self.config.extra.dollar_penalty_per_round
-            sendDebugMessage("Penalty: ".._penalty, self.key)
-            ease_dollars(-_penalty)
-            card_eval_status_text(card, 'dollars', -_penalty)
-        end
-
     end
 }
 
--- #################################
--- ############# MAZOS #############
--- Mazo debug
-SMODS.Back {
-    key = 'debug',
-    loc_txt = localize{ type = 'descriptions', set='Back', key = 'b_chr_debug' },
-    loc_vars = function (self)
-        return { vars = { self.config.dollars } }
+-- SMODS.Joker{
+--     key = 'pizza',
+--     atlas = 'jokers',
+--     pos = {x=0, y=0}, -- TODO Placeholder
+--     rarity = 2,
+--     loc_txt = localize{type='descriptions', set='Joker', key='j_chr_pizza'},
+--     -- loc_vars = function (self, info_queue, center)
+--     --     return {
+--     --         vars = {
+--
+--     --         }
+--     --     }
+--     -- end,
+--     cost = 8,
+--     config = {
+--         extra = {
+--             repetitions = 1,
+--             desired = {
+                -- "j_egg",
+                -- "j_ice_cream",
+                -- "j_popcorn",
+                -- "j_ramen",
+                -- "j_gros_michel",
+                -- "j_cavendish",
+                -- "j_diet_cola",
+                -- "j_turtle_bean",
+                -- "j_selzer"
+--             }
+--         }
+--     },
+--     unlocked = true,
+--     discovered = true,
+--     blueprint_compat = true,
+--     calculate = function (self, card, context)
+--        
+--     end
+-- }
+
+SMODS.Joker{
+    key = 'doublon',
+    atlas = 'jokers',
+    pos = {x=0, y=1},
+    rarity = 3,
+    loc_txt = localize{type='descriptions', set='Joker', key='j_chr_doublon'},
+    loc_vars = function (self, info_queue, center)
+        return {
+            vars = {
+                colours = {
+                    G.C.SUITS[self.config.req_card.suit]
+                }
+            }
+        }
     end,
+    cost = 7,
+    config = {
+        req_card = {
+            id = 14, -- Ace
+            suit = "Diamonds"
+        },
+        created_card = "c_temperance"
+    },
     unlocked = true,
     discovered = true,
-    config = {
-        dollars = 1000
-    },
-    apply = function (self)
-
-        G.E_MANAGER:add_event(Event({
-            func = function ()
-                add_joker("j_chr_helloworld")
-                add_joker("j_chr_roulette")
-                return true
-            end
-        }))
-
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+        return spanish_ace_effect(self, card, context)
     end
 }
+
+SMODS.Joker{
+    key = 'club',
+    atlas = 'jokers',
+    pos = {x=0, y=1},
+    rarity = 3,
+    loc_txt = localize{type='descriptions', set='Joker', key='j_chr_club'},
+    loc_vars = function (self, info_queue, center)
+        return {
+            vars = {
+                colours = {
+                    G.C.SUITS[self.config.req_card.suit]
+                }
+            }
+        }
+    end,
+    cost = 7,
+    config = {
+        req_card = {
+            id = 14, -- Ace
+            suit = "Clubs"
+        },
+        created_card = "c_empress"
+    },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+        return spanish_ace_effect(self, card, context)
+    end
+}
+
+SMODS.Joker{
+    key = 'sword',
+    atlas = 'jokers',
+    pos = {x=0, y=1},
+    rarity = 3,
+    loc_txt = localize{type='descriptions', set='Joker', key='j_chr_sword'},
+    loc_vars = function (self, info_queue, center)
+        return {
+            vars = {
+                colours = {
+                    G.C.SUITS[self.config.req_card.suit]
+                }
+            }
+        }
+    end,
+    cost = 7,
+    config = {
+        req_card = {
+            id = 14, -- Ace
+            suit = "Spades"
+        },
+        created_card = "c_heirophant"
+    },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+        return spanish_ace_effect(self, card, context)
+    end
+}
+
+SMODS.Joker{
+    key = 'chalice',
+    atlas = 'jokers',
+    pos = {x=0, y=1},
+    rarity = 3,
+    loc_txt = localize{type='descriptions', set='Joker', key='j_chr_chalice'},
+    loc_vars = function (self, info_queue, center)
+        return {
+            vars = {
+                colours = {
+                    G.C.SUITS[self.config.req_card.suit]
+                }
+            }
+        }
+    end,
+    cost = 7,
+    config = {
+        req_card = {
+            id = 14, -- Ace
+            suit = "Hearts"
+        },
+        created_card = "c_chariot"
+    },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+        return spanish_ace_effect(self, card, context)
+    end
+}
+
+-- SMODS.Joker{
+--     key = 'slotmachine',
+--     atlas = 'jokers',
+--     pos = {x=0, y=0},
+--     rarity = 2,
+--     loc_txt = localize{type='descriptions', set='Joker', key='j_chr_slotmachine'},
+--     loc_vars = function (self, info_queue, center)
+--         return {
+--             vars = {
+--
+--             }
+--         }
+--     end,
+--     cost = 7,
+--     config = {},
+--     unlocked = true,
+--     discovered = true,
+--     blueprint_compat = true,
+--     calculate = function (self, card, context)
+--
+--     end
+-- }

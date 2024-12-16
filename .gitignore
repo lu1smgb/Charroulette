@@ -4,3 +4,10 @@ xcf
 
 # Debug console and messages
 debug
+
+# Aseprite work directories
+aseprite
+*.aseprite
+
+# VSCode workspaces
+*.code-workspace

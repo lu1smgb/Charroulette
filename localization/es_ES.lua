@@ -1,14 +1,5 @@
 return {
     descriptions = {
-        Back = {
-            b_chr_debug = {
-                name = 'Baraja debug',
-                text = {
-                    "Comienza con {C:money}$#1#{} y", 
-                    "un comodín {C:dark_edition,T:j_chr_helloworld}HelloWorld {C:dark_edition,T:e_negative}negativo" 
-                }
-            }
-        },
         Joker = {
             j_chr_helloworld = {
                 name = "Hola mundo!",
@@ -38,19 +29,63 @@ return {
                 }
             },
             j_chr_roulette = {
-                name = "Ruleta",
+                name = "La ruleta",
                 text = {
-                    "Gira una ruleta de casino en cada {C:blue}mano{} y {C:red}descarte{}",
-                    "{C:red}Pagas {C:money}$#2#{} {C:red}por cada {C:blue}mano{} usada al final de la ronda",
+                    "La ruleta gira en cada {C:blue}mano{} y {C:red}descarte{}",
+                    "{C:red}Pagas {C:money}$#2#{} {C:red}por {C:blue}mano {C:red}jugada{}",
                     " ",
-                    "Cada carta del color del {C:attention}resultado{} otorga",
-                    "{C:mult}multi base{} según el número del {C:attention}resultado{}",
-                    "Si el resultado es {X:green,C:white}0{}, todas las cartas",
-                    "que anotan otorgan {C:mult}+#3#{} multi y {C:money}$#4#",
+                    "Las cartas que anotan otorgan",
+                    "{C:mult}multi{} segun el resultado",
+                    "{C:green}#3# en #4#{} de que las cartas que anotan",
+                    "otorguen {C:mult}+#5#{} multi y {C:money}$#6#{}",
                     "{C:inactive}(Resultado: {V:1}#1#{}{C:inactive})",
                     "{C:inactive,s:0.7}TODO AL {}{X:green,C:white,s:0.7}VERDE{}{C:inactive,s:0.7}!!!",
                 }
+            },
+            j_chr_slotmachine = {
+                name = "Tragaperras",
+                text = {
+                    "Gana {C:mult}+#1#{} de multi",
+                    "por cada {C:attention}#2#{} que anota"
+                }
+            },
+            j_chr_doublon = {
+                name = "El doblón",
+                text = {
+                    "Crea una carta {C:attention}La templanza{} {C:dark_edition}negativa{} si",
+                    "la primera mano de la ronda contiene un",
+                    "{C:attention}As{} de {V:1}Diamantes{} que anota"
+                }
+            },
+            j_chr_club = {
+                name = "El basto",
+                text = {
+                    "Crea una carta {C:attention}La emperatriz{} {C:dark_edition}negativa{} si",
+                    "la primera mano de la ronda contiene un",
+                    "{C:attention}As{} de {V:1}Tréboles{} que anota"
+                }
+            },
+            j_chr_sword = {
+                name = "La espada",
+                text = {
+                    "Crea una carta {C:attention}El hierofante{} {C:dark_edition}negativa{} si",
+                    "la primera mano de la ronda contiene un",
+                    "{C:attention}As{} de {V:1}Picas{} que anota"
+                }
+            },
+            j_chr_chalice = {
+                name = "El cáliz",
+                text = {
+                    "Crea una carta {C:attention}El carruaje{} {C:dark_edition}negativa{} si",
+                    "la primera mano de la ronda contiene un",
+                    "{C:attention}As{} de {V:1}Corazones{} que anota"
+                }
             }
+        }
+    },
+    misc = {
+        dictionary = {
+            k_chr_created_card = "Carta!"
         }
     }
 }
