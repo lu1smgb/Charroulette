@@ -545,6 +545,48 @@ SMODS.Joker{
     end
 }
 
+SMODS.Sound({
+    key = 'jv_er',
+    path = 'jv_er.ogg',
+})
+
+SMODS.Sound({
+    key = 'jv_p',
+    path = 'jv_p.ogg',
+})
+
+SMODS.Joker{
+    key = 'jv',
+    atlas = 'jokers',
+    pos = {x=0, y=0},
+    rarity = 3,
+    -- loc_txt
+    -- loc_vars
+    cost = 0,
+    -- config
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    add_to_deck = function (self, card, from_debuff)
+        G.E_MANAGER:add_event(Event({
+            func = function ()
+                play_sound('chr_jv_er')
+                return true
+            end
+        }))
+    end,
+    calculate = function (self, card, context)
+        if context.selling_self then
+            G.E_MANAGER:add_event(Event({
+                func = function ()
+                    play_sound('chr_jv_p')
+                    return true
+                end
+            }))
+        end
+    end
+}
+
 -- SMODS.Joker{
 --     key = 'slotmachine',
 --     atlas = 'jokers',
