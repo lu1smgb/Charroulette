@@ -1,45 +1,10 @@
+# Charroulette Balatro Mod
+# Lovely inyections
+# lu1smgb@18/12/2024
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = 1
-
-# Updates Egg Sandwich Xmult when an egg is sold
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = 'elseif context.selling_self then'
-position = 'after'
-match_indent = true
-payload = '''
-if self.ability.name == 'Egg' and not context.blueprint then
-    for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i] ~= self and G.jokers.cards[i].ability.name == 'Egg Sandwich' then
-            local actual_mult = G.jokers.cards[i].ability.x_mult
-            local added_mult = G.jokers.cards[i].ability.extra.sell_bonus_factor * self.sell_cost
-            sendDebugMessage('Se ha vendido un huevo, mejorando bocata de (' .. actual_mult .. ' + ' .. added_mult .. ')', 'j_egg_eggsandwich')
-            G.jokers.cards[i].ability.x_mult = actual_mult + added_mult
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    card_eval_status_text(
-                        G.jokers.cards[i], 
-                        'extra', 
-                        nil, 
-                        nil, 
-                        nil, 
-                        {message = localize {
-                            type='variable', 
-                            key='a_xmult', 
-                            vars={ G.jokers.cards[i].ability.x_mult }}
-                        }
-                    )
-                    return true
-                end               
-            }))
-            sendDebugMessage('Finalmente: ' .. G.jokers.cards[i].ability.x_mult, 'j_egg_eggsandwich')
-        end
-    end
-end
-'''
+priority = 0
 
 # Replaces splash Joker with Hello World Joker
 [[patches]]
