@@ -192,9 +192,6 @@ SMODS.Joker {
                 Xmult_mod = _xmult
             }
         end
-    end,
-    in_pool = function (self, args)
-        return #SMODS.find_card(self.key) == 0
     end
 }
 
@@ -271,7 +268,7 @@ SMODS.Joker {
             -- TODO: Optimize this, move this declaration to other file
             globals = {
                 number_limits = {
-                    min = 0,
+                    min = 1,
                     max = 36
                 },
                 colors = {
@@ -389,44 +386,6 @@ SMODS.Joker{
     end
 }
 
--- SMODS.Joker{
---     key = 'pizza',
---     atlas = 'jokers',
---     pos = {x=0, y=0}, -- TODO Placeholder
---     rarity = 2,
---     loc_txt = localize{type='descriptions', set='Joker', key='j_chr_pizza'},
---     -- loc_vars = function (self, info_queue, center)
---     --     return {
---     --         vars = {
---
---     --         }
---     --     }
---     -- end,
---     cost = 8,
---     config = {
---         extra = {
---             repetitions = 1,
---             desired = {
-                -- "j_egg",
-                -- "j_ice_cream",
-                -- "j_popcorn",
-                -- "j_ramen",
-                -- "j_gros_michel",
-                -- "j_cavendish",
-                -- "j_diet_cola",
-                -- "j_turtle_bean",
-                -- "j_selzer"
---             }
---         }
---     },
---     unlocked = true,
---     discovered = true,
---     blueprint_compat = true,
---     calculate = function (self, card, context)
---        
---     end
--- }
-
 SMODS.Joker{
     key = 'doublon',
     atlas = 'jokers',
@@ -461,7 +420,7 @@ SMODS.Joker{
 SMODS.Joker{
     key = 'club',
     atlas = 'jokers',
-    pos = {x=0, y=1},
+    pos = {x=1, y=1},
     rarity = 3,
     loc_txt = localize{type='descriptions', set='Joker', key='j_chr_club'},
     loc_vars = function (self, info_queue, center)
@@ -492,7 +451,7 @@ SMODS.Joker{
 SMODS.Joker{
     key = 'sword',
     atlas = 'jokers',
-    pos = {x=0, y=1},
+    pos = {x=2, y=1},
     rarity = 3,
     loc_txt = localize{type='descriptions', set='Joker', key='j_chr_sword'},
     loc_vars = function (self, info_queue, center)
@@ -523,7 +482,7 @@ SMODS.Joker{
 SMODS.Joker{
     key = 'chalice',
     atlas = 'jokers',
-    pos = {x=0, y=1},
+    pos = {x=3, y=1},
     rarity = 3,
     loc_txt = localize{type='descriptions', set='Joker', key='j_chr_chalice'},
     loc_vars = function (self, info_queue, center)
@@ -586,7 +545,7 @@ SMODS.Joker{
 SMODS.Joker{
     key = 'sigma',
     atlas = 'jokers',
-    pos = {x=1, y=1},
+    pos = {x=4, y=1},
     rarity = 2,
     loc_txt = localize{type='descriptions', set='Joker', key='j_chr_sigma'},
     loc_vars = function (self, info_queue, center)
