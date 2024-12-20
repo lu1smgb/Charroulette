@@ -23,7 +23,8 @@ return {
                 text = {
                     "Cuando se vende un {C:attention,T:j_egg}Huevo{}," ,
                     "este comodín gana {X:mult,C:white}X#1#{} por el", 
-                    "{C:money}valor de venta{} del {C:attention,T:j_egg}Huevo{} vendido",
+                    "{C:money}valor de venta{} del huevo vendido",
+                    "Los huevos pueden aparecer varias veces",
                     "{C:inactive}(Actualmente: {X:mult,C:white}X#2#{C:inactive} multi)",
                     "{C:inactive,s:0.7}Anabólico"
                 }
@@ -80,12 +81,29 @@ return {
                     "la primera mano de la ronda contiene un",
                     "{C:attention}As{} de {V:1}Corazones{} que anota"
                 }
+            },
+            j_chr_jv = {
+                name = "JV",
+                text = {
+                    "{C:inactive, s:1.5}???{}"
+                }
+            },
+            j_chr_sigma = {
+                name = "Sigma",
+                text = {
+                    "Al jugar una escalera, este comodín",
+                    "gana la suma de la categoría de las",
+                    "cartas que anotan en {C:chips}fichas{}",
+                    "{C:inactive}(Actualmente: {}{C:chips}+#1#{}{C:inactive}){}",
+                    "{C:inactive, s:0.7}esmegma{}"
+                }
             }
         }
     },
     misc = {
         dictionary = {
-            k_chr_created_card = "Carta!"
+            k_chr_created_card = "Carta!",
+            k_chr_plus_upgrade = "+#1#"
         }
     }
 }

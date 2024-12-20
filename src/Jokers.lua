@@ -192,11 +192,17 @@ SMODS.Joker {
                 Xmult_mod = _xmult
             }
         end
+    end,
+    in_pool = function (self, args)
+        return #SMODS.find_card(self.key) == 0
     end
 }
 
 -- Implementation of Egg synergies
 SMODS.Joker:take_ownership('egg', {
+    in_pool = function (self, args)
+        return #SMODS.find_card('j_chr_eggsandwich') >= 1 or #SMODS.find_card(self.key) == 0
+    end,
     calculate = function (self, card, context)
         if not card.debuff and context.selling_self and not context.blueprint then
             local sandwiches = SMODS.find_card('j_chr_eggsandwich')
@@ -545,22 +551,12 @@ SMODS.Joker{
     end
 }
 
-SMODS.Sound({
-    key = 'jv_er',
-    path = 'jv_er.ogg',
-})
-
-SMODS.Sound({
-    key = 'jv_p',
-    path = 'jv_p.ogg',
-})
-
 SMODS.Joker{
     key = 'jv',
     atlas = 'jokers',
     pos = {x=0, y=0},
     rarity = 3,
-    -- loc_txt
+    loc_txt = localize{type='descriptions', set='Joker', key='j_chr_jv'},
     -- loc_vars
     cost = 0,
     -- config
@@ -584,6 +580,61 @@ SMODS.Joker{
                 end
             }))
         end
+    end
+}
+
+SMODS.Joker{
+    key = 'sigma',
+    atlas = 'jokers',
+    pos = {x=1, y=1},
+    rarity = 2,
+    loc_txt = localize{type='descriptions', set='Joker', key='j_chr_sigma'},
+    loc_vars = function (self, info_queue, center)
+        -- TODO
+        return {
+            vars = {
+                center.ability.extra.chips or '???'
+            }
+        }
+    end,
+    cost = 6,
+    config = {
+        extra = {
+            chips = 0
+        }
+    },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+
+        if self.debuff then return end
+
+        if context.before and context.scoring_name == 'Straight' then
+            sendDebugMessage('Escalera!', self.key)
+            local upgrade = 0
+            for _,c in pairs(context.scoring_hand) do
+                upgrade = upgrade + c.base.nominal
+                sendDebugMessage(upgrade..'+'..c.base.nominal, self.key)
+            end
+            sendDebugMessage(card.ability.extra.chips..'+'..upgrade, self.key)
+            card.ability.extra.chips = card.ability.extra.chips + upgrade
+            if upgrade > 0 then
+                return {
+                    message = localize('k_upgrade_ex'),
+                    card = self,
+                }
+            end
+        end
+
+        if context.cardarea == G.jokers and not context.before and not context.after and card.ability.extra.chips > 0 then
+            return {
+                message = localize{ type='variable', key='a_chips', vars={card.ability.extra.chips} },
+                card = self,
+                colour = G.C.CHIPS
+            }
+        end
+
     end
 }
 
