@@ -20,23 +20,12 @@ Los items marcados son cosas que ya se encuentran implementadas
 - [x] España -> x3 de multi si la mano jugada contiene al menos una carta de corazones y de diamantes que anotan
 - [x] Bocata de huevo -> Gana x0.1 de multi por cada $ obtenido al vender huevos (TODO: Los huevos pueden aparecer varias veces `get_current_pool`)
 - [x] Ruleta -> *Mucho texto* Basicamente es una ruleta de casino y segun el resultado tiene efectos distintos
-- [?] Tragaperras -> +7 de multi por cada 7 que anota (TODO: y 1$)
-- [ ] Pizza cuadrada -> Reactiva los efectos de los comodines de comida (Complicado de implementar)
-```
-"j_egg",
-"j_ice_cream",
-"j_popcorn",
-"j_ramen",
-"j_gros_michel",
-"j_cavendish",
-"j_diet_cola",
-"j_turtle_bean",
-"j_selzer"
-```
-- [ ] El doblón -> Genera una carta La templanza negativa si la primera mano de la ronda contiene un As de Diamantes que anota
-- [ ] El basto -> Genera una carta La emperatriz negativa si la primera mano de la ronda contiene un As de Treboles que anota
+- [x] Tragaperras -> +7 de multi por cada 7 que anota (TODO: y 1$)
+- [x] El doblón -> Genera una carta La templanza negativa si la primera mano de la ronda contiene un As de Diamantes que anota
+- [x] El basto -> Genera una carta La emperatriz negativa si la primera mano de la ronda contiene un As de Treboles que anota
 - [ ] La espada -> Genera una carta El hierofante negativa si la primera mano de la ronda contiene un As de Picas que anota
 - [ ] El cáliz -> Genera una carta El carruaje negativa si la primera mano de la ronda contiene un As de Corazones que anota
+- [x] Sigma -> *No es por el meme, lo juro*
 - [ ] Comerciante -> Gana x0.05 de multi por cada carta, paquete potenciador o vale comprado.
 - [ ] Mango -> *No se pero con lo buenos que estan tendra que hacer algo muy bueno*
 - [ ] League of Legends -> Carta troll
@@ -48,9 +37,9 @@ Los items marcados son cosas que ya se encuentran implementadas
 - [ ] Comodin aerodinamico -> ???
 - [ ] Choque de espadas -> Reactiva las cartas adicionales jugadas (INUSUAL)
 - [ ] Terremoto -> Reactiva las cartas multi jugadas (INUSUAL)
-- [ ] Ingeniero -> x1 multi, pierde x0.1 multi cada ronda. 1 en 5 posibilidades de crear un Plano al vender este comodin, aumenta en 1 cada ronda (INUSUAL)
+- [ ] Arquitecto -> x1 multi, pierde x0.1 multi cada ronda. 1 en 5 posibilidades de crear un Plano al vender este comodin, aumenta en 1 cada ronda (INUSUAL)
 - [ ] Comodin maldito -> x3 de multi. x2 tamaño de la ciega. (Siempre es eterno) (INUSUAL)
-- [ ] Comodin del UNO -> Todas las cartas se consideran del mismo palo (RARA)
+- [ ] Comodin versatil -> Todas las cartas se consideran del mismo palo (RARA)
 
 ### Consumibles
 
