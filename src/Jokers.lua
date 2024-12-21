@@ -53,8 +53,7 @@ end
 -- Atlas
 -- ###########################################################################################################
 
-SMODS.Atlas {
-    key = "jokers",
+SMODS.Atlas { key = "jokers",
     px = 71,
     py = 95,
     path = {
@@ -68,8 +67,7 @@ SMODS.Atlas {
 -- ###########################################################################################################
 
 -- Hello World (Test Joker, might be deleted)
-SMODS.Joker {
-    key = 'helloworld',
+SMODS.Joker { key = 'helloworld',
     atlas = 'jokers',
     rarity = 1,
     loc_txt = localize{ type = 'descriptions', set='Joker', key = 'j_chr_helloworld' },
@@ -98,8 +96,7 @@ SMODS.Joker {
 }
 
 -- Spain
-SMODS.Joker {
-    key = 'spain',
+SMODS.Joker { key = 'spain',
     atlas = 'jokers',
     pos = {x = 1, y = 0},
     rarity = 2,
@@ -158,8 +155,7 @@ SMODS.Joker {
 
 -- Egg Sandwich
 -- TODO IDEA: Eggs are likely to appear more (showman effect)
-SMODS.Joker {
-    key = 'eggsandwich',
+SMODS.Joker { key = 'eggsandwich',
     atlas = 'jokers',
     pos = {x = 2, y = 0},
     rarity = 2,
@@ -233,8 +229,7 @@ SMODS.Joker:take_ownership('egg', {
 
 -- Roulette
 -- TODO: Check if works well when duplicated (invis joker)
-SMODS.Joker {
-    key = 'roulette',
+SMODS.Joker { key = 'roulette',
     atlas = 'jokers',
     pos = { x = 3, y = 0 },
     rarity = 3,
@@ -352,8 +347,7 @@ SMODS.Joker {
 }
 
 -- Slot Machine
-SMODS.Joker{
-    key = 'slotmachine',
+SMODS.Joker{ key = 'slotmachine',
     atlas = 'jokers',
     pos = {x=4, y=0}, -- TODO Placeholder
     rarity = 1,
@@ -386,8 +380,7 @@ SMODS.Joker{
     end
 }
 
-SMODS.Joker{
-    key = 'doublon',
+SMODS.Joker{ key = 'doublon',
     atlas = 'jokers',
     pos = {x=0, y=1},
     rarity = 3,
@@ -417,8 +410,7 @@ SMODS.Joker{
     end
 }
 
-SMODS.Joker{
-    key = 'club',
+SMODS.Joker{ key = 'club',
     atlas = 'jokers',
     pos = {x=1, y=1},
     rarity = 3,
@@ -448,8 +440,7 @@ SMODS.Joker{
     end
 }
 
-SMODS.Joker{
-    key = 'sword',
+SMODS.Joker{ key = 'sword',
     atlas = 'jokers',
     pos = {x=2, y=1},
     rarity = 3,
@@ -479,8 +470,7 @@ SMODS.Joker{
     end
 }
 
-SMODS.Joker{
-    key = 'chalice',
+SMODS.Joker{ key = 'chalice',
     atlas = 'jokers',
     pos = {x=3, y=1},
     rarity = 3,
@@ -510,8 +500,7 @@ SMODS.Joker{
     end
 }
 
-SMODS.Joker{
-    key = 'jv',
+SMODS.Joker{ key = 'jv',
     atlas = 'jokers',
     pos = {x=0, y=0},
     rarity = 3,
@@ -542,8 +531,7 @@ SMODS.Joker{
     end
 }
 
-SMODS.Joker{
-    key = 'sigma',
+SMODS.Joker{ key = 'sigma',
     atlas = 'jokers',
     pos = {x=4, y=1},
     rarity = 2,
@@ -594,6 +582,43 @@ SMODS.Joker{
             }
         end
 
+    end
+}
+
+SMODS.Joker {
+    key = 'cs2',
+    atlas = 'jokers',
+    pos = {x=0, y=2},
+    rarity = 2,
+    loc_txt = localize{type='descriptions', set='Joker', key='j_chr_cs2'},
+    loc_vars = function (self, info_queue, center)
+        return {
+            vars = {
+                self.config.extra.x_mult
+            }
+        }
+    end,
+    cost = 6,
+    config = {
+        extra = {
+            card = 14, -- Ace
+            x_mult = 2
+        }
+    },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+        if context.individual and context.cardarea == G.play then
+            local cat, xmult = self.config.extra.card, self.config.extra.x_mult
+            if context.other_card:get_id() == cat then
+                return {
+                    message = localize{ type='variable', key='a_xmult', vars = {xmult}},
+                    x_mult = xmult,
+                    card = card
+                } 
+            end
+        end
     end
 }
 

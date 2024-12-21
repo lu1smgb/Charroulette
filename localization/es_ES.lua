@@ -97,6 +97,20 @@ return {
                     "{C:inactive}(Actualmente: {}{C:chips}+#1#{}{C:inactive}){}",
                     "{C:inactive, s:0.7}esmegma{}"
                 }
+            },
+            j_chr_pizza = {
+                name = "Pizza",
+                text = {
+                    "Obtiene los efectos de los comodines",
+                    "de comida en propiedad"
+                }
+            },
+            j_chr_cs2 = {
+                name = "Counter-Strike",
+                text = {
+                    "Cada {C:attention}As{} otorga {X:mult,C:white}x#1#{} de multi",
+                    "cuando anota"
+                }
             }
         }
     },
